@@ -222,13 +222,14 @@ func assertSchedule(s schedule.Schedule, t *AddScheduledTask) {
 		}
 		return
 	case *schedule.WindowedSchedule:
-		startTime := v.StartTime.Unix()
-		stopTime := v.StopTime.Unix()
+		startTime := v.StartTime
+		stopTime := v.StopTime
+
 		t.Schedule = &core.Schedule{
 			Type:           "windowed",
 			Interval:       v.Interval.String(),
-			StartTimestamp: &startTime,
-			StopTimestamp:  &stopTime,
+			StartTimestamp: startTime,
+			StopTimestamp:  stopTime,
 		}
 		return
 	case *schedule.CronSchedule:
