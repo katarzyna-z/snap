@@ -549,7 +549,8 @@ func (s *scheduler) stopTask(id, source string) []serror.SnapError {
 			serror.New(err),
 		}
 	}
-
+	t.RLock()
+	defer t.Unlock()
 	switch t.state {
 	case core.TaskStopped:
 		logger.WithFields(log.Fields{

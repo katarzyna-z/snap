@@ -61,7 +61,7 @@ var (
 )
 
 type task struct {
-	sync.Mutex //protects state
+	sync.RWMutex //protects state
 
 	id                 string
 	name               string
@@ -284,9 +284,13 @@ func (t *task) spin() {
 			switch sr.State() {
 			// If response show this schedule is stil active we fire
 			case schedule.Active:
+				// You must lock task to change
+				t.Lock()
 				t.missedIntervals += sr.Missed()
 				t.lastFireTime = time.Now()
 				t.hitCount++
+				t.Unlock()
+
 				t.fire()
 				if t.lastFailureTime == t.lastFireTime {
 					consecutiveFailures++
