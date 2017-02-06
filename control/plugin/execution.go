@@ -30,6 +30,7 @@ import (
 	"time"
 
 	log "github.com/Sirupsen/logrus"
+	"sync"
 )
 
 var execLogger = log.WithField("_module", "plugin-exec")
@@ -39,6 +40,7 @@ type ExecutablePlugin struct {
 	cmd    command
 	stdout io.Reader
 	stderr io.Reader
+	sync.RWMutex
 }
 
 // An interface for the interactions ExecutablePlugin has with an exec.Cmd
@@ -131,7 +133,7 @@ func (e *ExecutablePlugin) Run(timeout time.Duration) (Response, error) {
 					close(doneChan)
 				} else {
 					execLogger.WithFields(log.Fields{
-						"plugin": e.name,
+						"plugin": e.getName(),
 						"io":     "stdout",
 					}).Debug(stdOutScanner.Text())
 				}
@@ -185,11 +187,19 @@ func (e *ExecutablePlugin) Run(timeout time.Duration) (Response, error) {
 }
 
 func (e *ExecutablePlugin) SetName(name string) {
+	e.Lock()
 	e.name = name
+	e.Unlock()
 }
 
 func (e *ExecutablePlugin) Kill() error {
 	return e.cmd.Kill()
+}
+
+func (e *ExecutablePlugin) getName() string {
+	e.RLock()
+	defer e.RUnlock()
+	return e.name
 }
 
 func (e *ExecutablePlugin) captureStderr() {
@@ -198,7 +208,7 @@ func (e *ExecutablePlugin) captureStderr() {
 		for {
 			for stdErrScanner.Scan() {
 				execLogger.
-					WithField("plugin", e.name).
+					WithField("plugin", e.getName()).
 					WithField("io", "stderr").
 					Debug(stdErrScanner.Text())
 			}
@@ -211,7 +221,7 @@ func (e *ExecutablePlugin) captureStderr() {
 				}
 
 				execLogger.
-					WithField("plugin", e.name).
+					WithField("plugin", e.getName()).
 					WithField("io", "stderr").
 					WithField("scanner_err", errScanner).
 					WithField("read_string_err", errRead).
