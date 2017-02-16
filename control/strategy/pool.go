@@ -360,11 +360,9 @@ func (p *pool) SubscriptionCount() int {
 	return len(p.subs)
 }
 
-// SelectAP selects an available plugin from the pool
+// SelectAP selects an available plugin from the pool,
+// the method is not thread safety so it should be protected outside of the body
 func (p *pool) SelectAP(taskID string, config map[string]ctypes.ConfigValue) (AvailablePlugin, serror.SnapError) {
-	p.RLock()
-	defer p.RUnlock()
-
 	aps := p.plugins.Values()
 
 	var id string
