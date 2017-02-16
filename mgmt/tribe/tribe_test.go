@@ -25,7 +25,7 @@ import (
 	"fmt"
 	"math/rand"
 	"net"
-	"sync"
+	sync "github.com/sasha-s/go-deadlock"
 	"sync/atomic"
 	"testing"
 	"time"

@@ -20,7 +20,7 @@ limitations under the License.
 package scheduler
 
 import (
-	"sync"
+	sync "github.com/sasha-s/go-deadlock"
 	"time"
 
 	log "github.com/Sirupsen/logrus"

@@ -22,7 +22,7 @@ package scheduler
 import (
 	"errors"
 	"fmt"
-	"sync"
+	sync "github.com/sasha-s/go-deadlock"
 )
 
 type managers struct {

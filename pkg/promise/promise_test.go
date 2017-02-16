@@ -4,7 +4,7 @@ package promise
 
 import (
 	"errors"
-	"sync"
+	sync "github.com/sasha-s/go-deadlock"
 	"testing"
 	"time"
 

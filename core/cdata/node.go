@@ -24,7 +24,7 @@ import (
 	"encoding/gob"
 	"encoding/json"
 	"fmt"
-	"sync"
+	sync "github.com/sasha-s/go-deadlock"
 
 	"github.com/intelsdi-x/snap/core/ctypes"
 	"github.com/intelsdi-x/snap/pkg/ctree"

@@ -22,7 +22,7 @@ package control
 import (
 	"errors"
 	"fmt"
-	"sync"
+	sync "github.com/sasha-s/go-deadlock"
 
 	"github.com/intelsdi-x/snap/core"
 	"github.com/intelsdi-x/snap/core/cdata"

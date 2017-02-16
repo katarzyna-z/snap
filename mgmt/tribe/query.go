@@ -20,7 +20,7 @@ limitations under the License.
 package tribe
 
 import (
-	"sync"
+	sync "github.com/sasha-s/go-deadlock"
 	"time"
 
 	"github.com/intelsdi-x/snap/core"

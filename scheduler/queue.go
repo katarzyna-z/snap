@@ -21,7 +21,7 @@ package scheduler
 
 import (
 	"errors"
-	"sync"
+	sync "github.com/sasha-s/go-deadlock"
 )
 
 var (

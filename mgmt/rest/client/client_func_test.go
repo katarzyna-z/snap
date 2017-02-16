@@ -26,7 +26,7 @@ package client
 import (
 	"fmt"
 	"io/ioutil"
-	"sync"
+	sync "github.com/sasha-s/go-deadlock"
 	"testing"
 	"time"
 

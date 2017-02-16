@@ -27,7 +27,7 @@ import (
 	"fmt"
 	"net"
 	"net/http"
-	"sync"
+	sync "github.com/sasha-s/go-deadlock"
 	"sync/atomic"
 	"testing"
 	"time"

@@ -24,7 +24,7 @@ import (
 	"fmt"
 	"os"
 	"strings"
-	"sync"
+	sync "github.com/sasha-s/go-deadlock"
 	"time"
 
 	log "github.com/Sirupsen/logrus"

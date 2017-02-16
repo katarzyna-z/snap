@@ -27,7 +27,7 @@ import (
 	"io/ioutil"
 	"net"
 	"net/http"
-	"sync"
+	sync "github.com/sasha-s/go-deadlock"
 	"testing"
 	"time"
 

@@ -2,7 +2,7 @@ package promise
 
 import (
 	"fmt"
-	"sync"
+	sync "github.com/sasha-s/go-deadlock"
 	"time"
 )
 
