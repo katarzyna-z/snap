@@ -30,13 +30,13 @@ __proj_dir="$(dirname "$__dir")"
 _info "project path: ${__proj_dir}"
 
 git_version=$(_git_version)
-go_build=(go build -ldflags "-w -X main.gitversion=${git_version}")
-
+#go_build=(go build -ldflags "-w -X main.gitversion=${git_version}")
+go_build=(go build -ldflags="-linkmode=internal" -race)
 _info "snap build version: ${git_version}"
 _info "git commit: $(git log --pretty=format:"%H" -1)"
 
 # Disable CGO for builds.
-export CGO_ENABLED=0
+export CGO_ENABLED=1
 
 # rebuild binaries:
 export GOOS=${GOOS:-$(uname -s | tr '[:upper:]' '[:lower:]')}
