@@ -30,6 +30,7 @@ import (
 	"time"
 
 	log "github.com/Sirupsen/logrus"
+	"syscall"
 )
 
 var execLogger = log.WithField("_module", "plugin-exec")
@@ -85,7 +86,9 @@ func NewExecutablePlugin(a Arg, commands ...string) (*ExecutablePlugin, error) {
 	cmd := &exec.Cmd{
 		Path: commands[0],
 		Args: append(commands, string(jsonArgs)),
+		SysProcAttr: &syscall.SysProcAttr{Setpgid: true},
 	}
+
 	stdout, err := cmd.StdoutPipe()
 	if err != nil {
 		return nil, err
